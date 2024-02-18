@@ -2,20 +2,16 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/User');
 const Recipe = require('../models/Recipe');
-const Item = require('../models/Item');
 
 const {
   BadRequestError,
   ConflictError,
-  UnauthorizedError,
+
   InternalServerError,
   NotFoundError,
 } = require('../errors/errors');
 
 const {
-  generateAccessToken,
-  generateRefreshToken,
-  verifyToken,
   generateUserObject,
   generateShoppingList,
   formatItemList,
@@ -48,13 +44,6 @@ const registerUser = async (req, res, next) => {
     const user = await User.create({ username, password: hashedPassword });
 
     if (user) {
-      const refreshToken = generateRefreshToken(user);
-
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      });
-
       res.status(201).json(generateUserObject(user));
     } else {
       throw new InternalServerError('Error creating user');
@@ -82,13 +71,6 @@ const loginUser = async (req, res, next) => {
       throw new BadRequestError('Username or password is incorrect');
     }
 
-    const refreshToken = generateRefreshToken(user);
-
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    });
-
     res.status(200).json(generateUserObject(user));
   } catch (err) {
     next(err);
@@ -98,27 +80,6 @@ const loginUser = async (req, res, next) => {
 const logoutUser = (req, res) => {
   res.clearCookie('refreshToken');
   res.status(200).json({ message: 'User logged out' });
-};
-
-const checkRefreshToken = (req, res, next) => {
-  const cookies = req.cookies;
-
-  if (!cookies?.refreshToken)
-    throw new UnauthorizedError('No refresh token', 'NO_TOKEN');
-
-  const refreshToken = cookies.refreshToken;
-
-  try {
-    const { _id } = verifyToken(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-
-    const accessToken = generateAccessToken(_id);
-
-    res.json({ accessToken, _id });
-  } catch (error) {
-    res.clearCookie('refreshToken');
-
-    throw new UnauthorizedError('Issues validating the token');
-  }
 };
 
 const getUserInfo = async (req, res, next) => {
@@ -426,7 +387,6 @@ const editUserFavourites = async (req, res, next) => {
 module.exports = {
   registerUser,
   loginUser,
-  checkRefreshToken,
   logoutUser,
   getUserInfo,
   getUserRecipeMenu,

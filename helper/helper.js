@@ -80,16 +80,6 @@ const generateAccessToken = (id) => {
   });
 };
 
-const generateRefreshToken = (user) => {
-  const payload = {
-    _id: user._id,
-    isAdmin: user.isAdmin,
-  };
-  return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: '30d',
-  });
-};
-
 const verifyToken = (token, secret) => {
   return jwt.verify(token, secret);
 };
@@ -120,7 +110,6 @@ module.exports = {
   generateShoppingList,
   formatItemList,
   generateAccessToken,
-  generateRefreshToken,
   verifyToken,
   generateUserObject,
   validateRequest,
