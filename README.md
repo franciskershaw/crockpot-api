@@ -8,6 +8,12 @@ This backend API written in Express.JS corresponds to the client side applicatio
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Running the API](#running-the-api)
+- [Models](#models)
+- [Routes and controllers](#routes-and-controllers)
+- [Middleware](#middleware)
+- [Validation](#Validation)
+- [Technologies](#technologies)
+- [Deployment](#deployment)
 
 ## Getting Started
 
@@ -48,8 +54,6 @@ In theory, if you've followed the steps correctly, you should be able to run a l
 npm run server
 ```
 This will run the server with nodemon and listen for changes.
-
-## Endpoints
 
 ## Models
 
