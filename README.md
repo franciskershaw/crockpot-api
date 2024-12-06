@@ -88,5 +88,5 @@ All logic that requires changes to the database in any way is sanitised using Jo
 
 ## Deployment
 
-This API has been deployed manually to a [Digital Ocean](https://www.digitalocean.com/) droplet, a virtual machine using Ubuntu. Nginx is being used as a proxy to manage incoming requests, and PM2 is being used to ensure the server is always running. The welcome message of the API can be found [here](https://api.crockpot.app/)
+This API has been deployed manually to a [Digital Ocean](https://www.digitalocean.com/) droplet, a virtual machine using Ubuntu. Nginx is being used as a proxy to manage incoming requests, and PM2 is being used to ensure the server is always running. The welcome message of the API can be found [here](https://api.crockpot.app/) 
 
