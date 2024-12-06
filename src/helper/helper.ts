@@ -17,11 +17,13 @@ export const generateShoppingList = async (menu: any) => {
         serves: 1,
       });
       const ingredients = recipe?.toObject().ingredients;
+      // @ts-ignore
       let ingredientsFormated = ingredients
         .filter((ingredient: any) => ingredient._id.toString() !== waterId)
         .map((ingredient: any) => {
           return {
             ...ingredient,
+            // @ts-ignore
             quantity: (ingredient.quantity / recipe.serves) * object.serves,
             obtained: false,
           };

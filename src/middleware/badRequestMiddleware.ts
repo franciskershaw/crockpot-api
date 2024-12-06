@@ -10,6 +10,7 @@ export const itemIdInShoppingList = async (
   try {
     // @ts-ignore
     const userId = req.user._id;
+    // @ts-ignore
     const { shoppingList } = await User.findById(userId);
 
     const itemId = req.params.itemId;
@@ -38,6 +39,7 @@ export const itemIdInExtraItems = async (
     if (req.body.obtained) {
       // @ts-ignore
       const userId = req.user._id;
+      // @ts-ignore
       const { extraItems } = await User.findById(userId);
 
       const itemId = req.params.itemId;
