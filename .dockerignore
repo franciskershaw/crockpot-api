@@ -1,0 +1,78 @@
+# Node modules - these are installed fresh in the container
+node_modules
+
+# Build artifacts and output folders
+dist
+build
+
+# Environment files - contain sensitive data and are not needed in the image
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Docker and Docker Compose files - not needed inside the image
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+
+# Git and version control files
+.git
+.gitignore
+.gitattributes
+
+# Logs and temporary files
+npm-debug.log
+yarn-error.log
+*.log
+
+# Local IDE/editor configurations
+.vscode
+.idea
+*.swp
+
+# Coverage and testing output
+coverage
+*.test.js
+*.spec.js
+__tests__
+__mocks__
+
+# Additional Docker-related files
+Dockerfile.dev
+.dockerignore
+
+# TypeScript source maps
+*.map
+*.tsbuildinfo
+
+# Development configurations
+nodemon.json
+.prettierrc
+.eslintrc
+.eslintignore
+
+# Additional npm files
+.npm
+.npmrc
+package-lock.json.tmp
+
+# Additional IDE/editor files
+.settings/
+*.sublime-workspace
+*.sublime-project
+.history/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary development files
+tmp/
+temp/

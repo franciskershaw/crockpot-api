@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev  # for development
+    ports:
+      - "5100:5100"
+    environment:
+      - NODE_ENV=development
+      - PORT=5100
+      - MONGO_URI=${MONGO_URI} # Atlas URI from .env
+      - CORS_ORIGIN=${CORS_ORIGIN} # from .env
+    volumes:
+      - .:/usr/src/app # Mount code for hot reloading
+      - /usr/src/app/node_modules # Avoids overwriting node_modules in container
+    command: npm run docker:dev # Use the docker:dev script for hot reloading
