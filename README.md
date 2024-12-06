@@ -1,6 +1,6 @@
 # Crockpot - Backend API
 
-This backend API written in Express.JS corresponds to the client side application in [this repository](https://github.com/franciskershaw/crockpot). It handles all server requests, from logging in or registering new users to returning recipe data to the generation of shopping lists based off of recipes in a user's menu. This API will eventually be phased out, with backend logic being gradually added to the Next.JS project for simplicity and consolidation. 
+This backend API written in Express.JS corresponds to the client side application in [this repository](https://github.com/franciskershaw/crockpot). It handles all server requests, from logging in or registering new users to returning recipe data to the generation of shopping lists based off of recipes in a user's menu. This API will eventually be phased out, with backend logic being gradually added to the Next.JS project for simplicity and consolidation.
 
 ## Table of Contents
 
@@ -20,10 +20,11 @@ This backend API written in Express.JS corresponds to the client side applicatio
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
+
 - Node.JS version 20.9.0 installed
 - NPM version 10.2.5 installed
 - A MongoDB Atlas account, with a cluster created and a database called 'crockpot' - you can call the first collection 'users'. You need to get the URI string from the 'Connect' section of the database/cluster
-- A free account created with Cloudinary, and access to the credentials: Cloud Name, Cloud Key, and Secret 
+- A free account created with Cloudinary, and access to the credentials: Cloud Name, Cloud Key, and Secret
 
 ```bash
 node >= 20.x
@@ -31,6 +32,7 @@ npm >= 10.x
 ```
 
 ### Installation
+
 - Clone the repository
 - From the root, run `npm install`
 - In the root, create a `.env` file with the following variables:
@@ -49,10 +51,13 @@ CORS_ORGIN<where your Next application is running, likely http://localhost:3000>
 ```
 
 ### Running the API
+
 In theory, if you've followed the steps correctly, you should be able to run a local version of the API by running this command from the root:
+
 ```
 npm run server
 ```
+
 This will run the server with nodemon and listen for changes.
 
 ## Models
@@ -78,6 +83,7 @@ Middleware for authentication is defined in authMiddleware.js, and for error han
 All logic that requires changes to the database in any way is sanitised using Joi schemas to ensure requests are valid.
 
 ## Technologies
+
 - Express.JS
 - MongoDB with Mongoose
 - Cloudinary
@@ -88,5 +94,4 @@ All logic that requires changes to the database in any way is sanitised using Jo
 
 ## Deployment
 
-This API has been deployed manually to a [Digital Ocean](https://www.digitalocean.com/) droplet, a virtual machine using Ubuntu. Nginx is being used as a proxy to manage incoming requests, and PM2 is being used to ensure the server is always running. The welcome message of the API can be found [here](https://api.crockpot.app/) 
-
+This API has been deployed manually to a [Digital Ocean](https://www.digitalocean.com/) droplet, a virtual machine using Ubuntu. Nginx is being used as a proxy to manage incoming requests, and PM2 is being used to ensure the server is always running. The welcome message of the API can be found [here](https://api.crockpot.app/)
