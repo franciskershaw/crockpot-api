@@ -19,12 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug Docker credentials
-        run: |
-          echo "Docker username secret exists: ${{ secrets.DOCKER_USERNAME != '' }}"
-          echo "Docker password secret exists: ${{ secrets.DOCKER_PASSWORD != '' }}"
-          echo "DOCKER_IMAGE value: ${{ env.DOCKER_IMAGE }}"
-
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -90,11 +84,11 @@ jobs:
           script_stop: true
           script: |
             echo "Starting nginx configuration..."
-            
+
             # Debug: Show current directory and contents
             pwd
             ls -la /home/${{ secrets.DO_USERNAME }}/nginx/
-            
+
             # Check existing configuration
             if [ -f "/etc/nginx/sites-available/api.crockpot.app" ]; then
               echo "Checking existing nginx configuration..."
@@ -103,21 +97,21 @@ jobs:
                 exit 0
               fi
             fi
-            
+
             echo "Setting up new nginx config..."
             if [ ! -f "/home/${{ secrets.DO_USERNAME }}/nginx/crockpot-api.conf" ]; then
               echo "Error: nginx configuration file not found"
               exit 1
             fi
-            
+
             # Move configuration file
             sudo mv "/home/${{ secrets.DO_USERNAME }}/nginx/crockpot-api.conf" "/etc/nginx/sites-available/api.crockpot.app"
             sudo ln -sf "/etc/nginx/sites-available/api.crockpot.app" "/etc/nginx/sites-enabled/"
-            
+
             # Verify nginx configuration
             echo "Testing nginx configuration..."
             sudo nginx -t
-            
+
             # Setup SSL if needed
             if [ ! -f "/etc/letsencrypt/live/api.crockpot.app/fullchain.pem" ]; then
               echo "Setting up SSL certificate..."
@@ -128,7 +122,7 @@ jobs:
                 --email ${{ secrets.CERTBOT_EMAIL }} \
                 --redirect
             fi
-            
+
             echo "Reloading nginx..."
             sudo systemctl reload nginx
 
