@@ -2,7 +2,7 @@
   "name": "crockpot-api",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "docker:dev": "nodemon --watch src --exec ts-node src/server.ts",
