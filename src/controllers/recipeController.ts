@@ -49,87 +49,87 @@ const deleteImageFromCloudinary = async (filename: string) => {
   }
 };
 
-export const createNewRecipe = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const value = validateRequest(req.body, createRecipeSchema);
+// export const createNewRecipe = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const value = validateRequest(req.body, createRecipeSchema);
 
-    const recipe = new Recipe(value);
-    if (req.file) {
-      recipe.image = {
-        url: req.file.path,
-        filename: req.file.filename,
-      };
-    }
-    // @ts-ignore
-    recipe.createdBy = req.user._id;
-    // @ts-ignore
-    if (req.user.isAdmin) {
-      recipe.approved = true;
-    }
-    await recipe.save();
-    res.status(201).json(recipe);
-  } catch (err) {
-    if (req.file) {
-      await deleteImageFromCloudinary(req.file.filename);
-    }
-    next(err);
-  }
-};
+//     const recipe = new Recipe(value);
+//     if (req.file) {
+//       recipe.image = {
+//         url: req.file.path,
+//         filename: req.file.filename,
+//       };
+//     }
+//     // @ts-ignore
+//     recipe.createdBy = req.user._id;
+//     // @ts-ignore
+//     if (req.user.isAdmin) {
+//       recipe.approved = true;
+//     }
+//     await recipe.save();
+//     res.status(201).json(recipe);
+//   } catch (err) {
+//     if (req.file) {
+//       await deleteImageFromCloudinary(req.file.filename);
+//     }
+//     next(err);
+//   }
+// };
 
-export const editRecipe = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    // @ts-ignore
-    const recipe = await Recipe.findById(req.params.recipeId);
+// export const editRecipe = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     // @ts-ignore
+//     const recipe = await Recipe.findById(req.params.recipeId);
 
-    if (!recipe) {
-      throw new NotFoundError("Recipe not found");
-    }
+//     if (!recipe) {
+//       throw new NotFoundError("Recipe not found");
+//     }
 
-    if (
-      // @ts-ignore
-      recipe.createdBy.toString() !== req.user._id.toString() &&
-      // @ts-ignore
-      !req.user.isAdmin
-    ) {
-      throw new UnauthorizedError(
-        "You do not have permission to edit this recipe",
-        "UNAUTHORIZED"
-      );
-    }
+//     if (
+//       // @ts-ignore
+//       recipe.createdBy.toString() !== req.user._id.toString() &&
+//       // @ts-ignore
+//       !req.user.isAdmin
+//     ) {
+//       throw new UnauthorizedError(
+//         "You do not have permission to edit this recipe",
+//         "UNAUTHORIZED"
+//       );
+//     }
 
-    const value = validateRequest(req.body, editRecipeSchema);
-    const oldFilename = recipe.image && recipe.image.filename;
+//     const value = validateRequest(req.body, editRecipeSchema);
+//     const oldFilename = recipe.image && recipe.image.filename;
 
-    recipe.set(value);
-    if (req.file) {
-      recipe.image = {
-        url: req.file.path,
-        filename: req.file.filename,
-      };
-    }
-    await recipe.save();
+//     recipe.set(value);
+//     if (req.file) {
+//       recipe.image = {
+//         url: req.file.path,
+//         filename: req.file.filename,
+//       };
+//     }
+//     await recipe.save();
 
-    // If a new image was uploaded, delete the old one
-    if (oldFilename && req.file) {
-      await deleteImageFromCloudinary(oldFilename);
-    }
+//     // If a new image was uploaded, delete the old one
+//     if (oldFilename && req.file) {
+//       await deleteImageFromCloudinary(oldFilename);
+//     }
 
-    res.status(200).json(recipe);
-  } catch (err) {
-    if (req.file) {
-      await deleteImageFromCloudinary(req.file.filename);
-    }
-    next(err);
-  }
-};
+//     res.status(200).json(recipe);
+//   } catch (err) {
+//     if (req.file) {
+//       await deleteImageFromCloudinary(req.file.filename);
+//     }
+//     next(err);
+//   }
+// };
 
 export const deleteRecipe = async (
   req: Request,
